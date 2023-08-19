@@ -52,19 +52,40 @@ func TestSumAll(t *testing.T) {
 
 type sumAllInput struct {
 	NumberSlices [][]int
-	SumSlice 	 []int
+	SumSlice     []int
 }
 
 func newSumAllInput(numberSlices [][]int, sumSlice []int) sumAllInput {
 	return sumAllInput{
 		NumberSlices: numberSlices,
-		SumSlice: sumSlice,
+		SumSlice:     sumSlice,
 	}
 }
 
 func TestSumAllTails(t *testing.T) {
 	t.Parallel()
-	got := SumAllTails([]int{1, 2, 3}, []int{0, 9})
-	want := []int{5, 9}
-	assert.Equal(t, got, want)
+	for _, tc := range []sumAllTailsInput{
+		newSumAllTailsInput([][]int{{1, 2, 3}, {0, 9}}, []int{5, 9}),
+		newSumAllTailsInput([][]int{{1, 2}, {0, 9, 10}, {1, 2, 3}}, []int{2, 19, 5}),
+	} {
+		tc := tc
+		t.Run(fmt.Sprintf("summing tails %v and expecting %d", tc.NumberSlices, tc.SumSlice), func(t *testing.T) {
+			t.Parallel()
+			got := SumAllTails(tc.NumberSlices...)
+			want := tc.SumSlice
+			assert.Equal(t, got, want)
+		})
+	}
+}
+
+type sumAllTailsInput struct {
+	NumberSlices [][]int
+	SumSlice     []int
+}
+
+func newSumAllTailsInput(numberSlices [][]int, sumSlice []int) sumAllTailsInput {
+	return sumAllTailsInput{
+		NumberSlices: numberSlices,
+		SumSlice:     sumSlice,
+	}
 }
