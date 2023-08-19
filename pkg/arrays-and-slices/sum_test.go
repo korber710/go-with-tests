@@ -23,6 +23,17 @@ func TestSum(t *testing.T) {
 	}
 }
 
+type sumInput struct {
+	Numbers []int
+	Sum     int
+}
+
+func newSumInput(numbers []int, sum int) sumInput {
+	return sumInput{
+		Numbers: numbers, Sum: sum,
+	}
+}
+
 func TestSumAll(t *testing.T) {
 	t.Parallel()
 	for _, tc := range []sumAllInput{
@@ -51,13 +62,9 @@ func newSumAllInput(numberSlices [][]int, sumSlice []int) sumAllInput {
 	}
 }
 
-type sumInput struct {
-	Numbers []int
-	Sum     int
-}
-
-func newSumInput(numbers []int, sum int) sumInput {
-	return sumInput{
-		Numbers: numbers, Sum: sum,
-	}
+func TestSumAllTails(t *testing.T) {
+	t.Parallel()
+	got := SumAllTails([]int{1, 2, 3}, []int{0, 9})
+	want := []int{5, 9}
+	assert.Equal(t, got, want)
 }
