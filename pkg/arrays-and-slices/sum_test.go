@@ -67,6 +67,7 @@ func TestSumAllTails(t *testing.T) {
 	for _, tc := range []sumAllTailsInput{
 		newSumAllTailsInput([][]int{{1, 2, 3}, {0, 9}}, []int{5, 9}),
 		newSumAllTailsInput([][]int{{1, 2}, {0, 9, 10}, {1, 2, 3}}, []int{2, 19, 5}),
+		newSumAllTailsInput([][]int{{}, {3, 4, 5}}, []int{0, 9}),
 	} {
 		tc := tc
 		t.Run(fmt.Sprintf("summing tails %v and expecting %d", tc.NumberSlices, tc.SumSlice), func(t *testing.T) {
