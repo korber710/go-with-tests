@@ -59,6 +59,23 @@ func TestCalculatingCircleArea(t *testing.T) {
 	}
 }
 
+func TestCalculatingTriangleArea(t *testing.T) {
+	t.Parallel()
+	for _, tc := range []struct {
+		t    Triangle
+		area float64
+	}{
+		{NewTriangle(1.0, 1.0), 0.5},
+		{NewTriangle(5.0, 10.0), 25.0},
+	} {
+		tc := tc
+		t.Run(fmt.Sprintf("calculate area for %.2f and %.2f and expecting %.2f", tc.t.base, tc.t.height, tc.area), func(t *testing.T) {
+			t.Parallel()
+			checkArea(t, tc.t, tc.area)
+		})
+	}
+}
+
 func checkArea(t testing.TB, shape Shape, want float64) {
 	t.Helper()
 	got := shape.Area()
