@@ -18,9 +18,9 @@ func TestCalculatingRectanglePerimeter(t *testing.T) {
 		tc := tc
 		t.Run(fmt.Sprintf("calculate perimeter for %.2f and %.2f and expecting %.2f", tc.r.length, tc.r.width, tc.perimeter), func(t *testing.T) {
 			t.Parallel()
-			got := tc.r.Perimeter()
-			want := tc.perimeter
-			assert.Equal(t, got, want)
+			hasPerimeter := tc.r.Perimeter()
+			wantedPerimeter := tc.perimeter
+			assert.Equal(t, hasPerimeter, wantedPerimeter)
 		})
 	}
 }
@@ -76,8 +76,8 @@ func TestCalculatingTriangleArea(t *testing.T) {
 	}
 }
 
-func checkArea(t testing.TB, shape Shape, want float64) {
+func checkArea(t testing.TB, shape Shape, wantedArea float64) {
 	t.Helper()
-	got := shape.Area()
-	assert.Equal(t, got, want)
+	hasArea := shape.Area()
+	assert.Equal(t, hasArea, wantedArea)
 }
