@@ -39,8 +39,29 @@ func TestWithdrawsAndChecksBalance(t *testing.T) {
 		t.Run(fmt.Sprintf("deposit %d, withdraw %d and expect %d", tc.deposit, tc.withdraw, tc.final), func(t *testing.T) {
 			t.Parallel()
 			tc.w.Deposit(tc.deposit)
-			tc.w.Withdraw(tc.withdraw)
+			_ = tc.w.Withdraw(tc.withdraw)
 			assert.Equal(t, tc.w.Balance(), tc.final)
+		})
+	}
+}
+
+func TestReportsErrorWhenInsufficientFunds(t *testing.T) {
+	t.Parallel()
+	for _, tc := range []struct {
+		w        Wallet
+		deposit  Bitcoin
+		withdraw Bitcoin
+	}{
+		{Wallet{}, Bitcoin(10), Bitcoin(100)},
+		{Wallet{}, Bitcoin(5), Bitcoin(6)},
+	} {
+		tc := tc
+		t.Run(fmt.Sprintf("deposit %d, withdraw %d and expect error", tc.deposit, tc.withdraw), func(t *testing.T) {
+			t.Parallel()
+			tc.w.Deposit(tc.deposit)
+			err := tc.w.Withdraw(tc.withdraw)
+			assert.Error(t, err)
+			assert.Equal(t, tc.w.Balance(), tc.deposit)
 		})
 	}
 }
