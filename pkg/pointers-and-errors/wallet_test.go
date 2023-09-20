@@ -61,6 +61,7 @@ func TestReportsErrorWhenInsufficientFunds(t *testing.T) {
 			tc.w.Deposit(tc.deposit)
 			err := tc.w.Withdraw(tc.withdraw)
 			assert.Error(t, err)
+			assert.ErrorIs(t, err, ErrInsufficientFunds)
 			assert.Equal(t, tc.w.Balance(), tc.deposit)
 		})
 	}
