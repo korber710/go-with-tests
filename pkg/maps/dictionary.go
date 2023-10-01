@@ -1,7 +1,5 @@
 package maps
 
-import "errors"
-
 type Dictionary map[string]string
 
 func (d Dictionary) Search(word string) (string, error) {
@@ -13,8 +11,11 @@ func (d Dictionary) Search(word string) (string, error) {
 	return definition, nil
 }
 
-func (d Dictionary) Add(word, definition string) {
+func (d Dictionary) Add(word, definition string) error {
+	_, ok := d[word]
+	if ok {
+		return ErrWordAlreadyExists
+	}
 	d[word] = definition
+	return nil
 }
-
-var ErrWordNotFound = errors.New("cannot withdraw, insufficient funds")

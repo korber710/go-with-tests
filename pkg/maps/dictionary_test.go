@@ -44,10 +44,19 @@ func TestSearchReportsErrorWithUnknownKey(t *testing.T) {
 func TestAddingNewWord(t *testing.T) {
 	t.Parallel()
 	dictionary := Dictionary{"test": "this is just a test"}
-	dictionary.Add("hello", "world")
+	_ = dictionary.Add("hello", "world")
 	got, _ := dictionary.Search("hello")
 	want := "world"
 	assert.Equal(t, got, want)
+}
+
+func TestAddingExistingWordReportsError(t *testing.T) {
+	t.Parallel()
+	dictionary := Dictionary{"test": "this is just a test"}
+	err := dictionary.Add("test", "new definition")
+	want := ErrWordAlreadyExists
+	assert.Error(t, err)
+	assert.ErrorIs(t, err, want)
 }
 
 type dictionaryTestCase struct {
