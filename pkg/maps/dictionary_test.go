@@ -41,6 +41,15 @@ func TestSearchReportsErrorWithUnknownKey(t *testing.T) {
 	}
 }
 
+func TestAddingNewWord(t *testing.T) {
+	t.Parallel()
+	dictionary := Dictionary{"test": "this is just a test"}
+	dictionary.Add("hello", "world")
+	got, _ := dictionary.Search("hello")
+	want := "world"
+	assert.Equal(t, got, want)
+}
+
 type dictionaryTestCase struct {
 	key   string
 	value string
