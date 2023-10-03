@@ -59,6 +59,15 @@ func TestAddingExistingWordReportsError(t *testing.T) {
 	assert.ErrorIs(t, err, want)
 }
 
+func TestDeleteExistingWord(t *testing.T) {
+	t.Parallel()
+	word := "test"
+	dictionary := Dictionary{word: "this is just a test"}
+	dictionary.Delete(word)
+	_, err := dictionary.Search(word)
+	assert.Error(t, err)
+}
+
 type dictionaryTestCase struct {
 	key   string
 	value string
