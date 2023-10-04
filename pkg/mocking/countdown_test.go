@@ -1,4 +1,4 @@
-package dependency_injection
+package mocking
 
 import (
 	"bytes"
@@ -6,15 +6,15 @@ import (
 	"testing"
 )
 
-func TestGreet(t *testing.T) {
+func TestCountdown(t *testing.T) {
 	t.Parallel()
 
-	buffer := bytes.Buffer{}
+	buffer := &bytes.Buffer{}
 
-	Greet(&buffer, "Chris")
+	Countdown(buffer)
 
 	got := buffer.String()
-	want := "Hello, Chris\n"
+	want := "3"
 
 	assert.Equal(t, got, want)
 }
